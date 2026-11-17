@@ -1,0 +1,45 @@
+{
+  "about": "Local deleted 1 (at now-5m, after its last edit at now-10m) and 2 (at == updated: at >= updated still kills). Both go; the tombstones stay. Remote base [1, 2, 3] leaves [3].",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799999700000},
+      {"id":2,"at":1799992800000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999400000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799999700000},
+      {"id":2,"at":1799992800000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

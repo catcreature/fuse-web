@@ -1,0 +1,41 @@
+{
+  "about": "Tombstones are unioned by id keeping the larger at (1: now-2d beats now-3d), written sorted by id.",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799740800000},
+      {"id":2,"at":1799913600000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":3,"at":1799996400000},
+      {"id":1,"at":1799827200000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799827200000},
+      {"id":2,"at":1799913600000},
+      {"id":3,"at":1799996400000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

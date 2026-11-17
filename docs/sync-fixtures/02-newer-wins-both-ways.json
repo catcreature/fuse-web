@@ -1,0 +1,40 @@
+{
+  "about": "The larger updated wins whichever side it is on: 1 is newer locally, 2 newer remotely. Order: remote base [1, 2].",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"local edit","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999400000},
+      {"id":2,"title":"local old","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"remote old","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"remote edit","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999700000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"local edit","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999400000},
+      {"id":2,"title":"remote edit","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999700000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

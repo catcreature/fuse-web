@@ -1,0 +1,37 @@
+{
+  "about": "Same updated, same list: remote wins.",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"local","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"remote","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"remote","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "about": "History is sorted by endedAt ascending, then id: now-3h holds 2 and 4, then 1 (now-2h), then 5 (now-1h): [2, 4, 1, 5].",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [],
+    "history": [
+      {"id":5,"title":"t5","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799996400000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799989200000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [],
+    "history": [
+      {"id":4,"title":"t4","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799989200000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [],
+    "history": [
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799989200000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":4,"title":"t4","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799989200000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":5,"title":"t5","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799996400000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

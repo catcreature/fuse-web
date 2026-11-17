@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#D9480F" />
+    <title>Fuse</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Fuse</h1>
+        <a id="open-history" href="#/history" class="icon" aria-label="History">🕘</a>
+        <select id="sort" aria-label="Sort tasks" autocomplete="off">
+          <option value="MINE">My order</option>
+          <option value="EXPIRING">Expiring soonest</option>
+          <option value="PRIORITY">Priority</option>
+          <option value="NEWEST">Newest first</option>
+          <option value="OLDEST">Oldest first</option>
+        </select>
+        <button id="open-settings" type="button" aria-label="Settings" class="icon">⚙</button>
+        <p id="summary"></p>
+      </header>
+      <div id="banner" role="status" hidden></div>
+      <section id="cards"></section>
+      <form id="add" autocomplete="off">
+        <input id="quick" type="text" enterkeyhint="done" aria-label="New task" maxlength="200" />
+        <button type="submit" aria-label="Add task">+</button>
+        <p id="preview" aria-live="polite"></p>
+      </form>
+      <section id="burned" hidden></section>
+      <ul id="list"></ul>
+      <footer>
+        <button id="backup" type="button">Save a backup</button>
+        <button id="restore" type="button">Restore a backup</button>
+        <input id="file" type="file" accept="application/json,.json" hidden />
+        <p id="version"></p>
+      </footer>
+    </main>
+    <div id="undo" role="status" hidden><span></span><button type="button">Undo</button></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

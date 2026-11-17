@@ -1,0 +1,47 @@
+{
+  "about": "Equal orderAt: remote [3, 2, 1] is the base; local-only 7 and 8 go on top in local order: [7, 8, 3, 2, 1].",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":7,"title":"t7","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":8,"title":"t8","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 1799996400000,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 1799996400000,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":7,"title":"t7","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":8,"title":"t8","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":3,"title":"t3","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 1799996400000,
+    "doneGone": 0
+  }
+}

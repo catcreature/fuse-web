@@ -1,0 +1,51 @@
+{
+  "about": "Same updated everywhere: 1 (remote history) and 2 (local history) beat the unswept list copies; 3 and 4 on a list beat the Matchbox copy. Tasks: remote base [2, 3] keeps 3; local-only-in-tasks 4 goes on top (1 lost to history): [4, 3]. History by endedAt then id: [1, 2]. Matches: none survive there.",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":4,"title":"on list","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [
+      {"id":3,"title":"in matchbox","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":3,"title":"on list","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [
+      {"id":4,"title":"in matchbox","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":4,"title":"on list","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":3,"title":"on list","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "history": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000},
+      {"id":2,"title":"t2","notes":"","priority":1,"created":1799906400000,"expires":1799992800000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1799992800000,"cleared":false,"custom":false,"updated":1799992800000}
+    ],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

@@ -1,0 +1,82 @@
+/* The task editor's bottom sheet (editor.ts). Colours are style.css's tokens. */
+.card-text { cursor: pointer; }
+
+dialog.sheet {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 560px;
+  max-height: 92vh;
+  max-height: 92dvh;
+  margin: auto auto 0;
+  padding: 16px;
+  overflow: auto;
+  border: 0;
+  border-radius: 20px 20px 0 0;
+  background: var(--card);
+  color: var(--ink);
+}
+dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
+.sheet [hidden] { display: none !important; }
+.sheet header { margin-bottom: 12px; }
+.sheet h2 { margin: 0; font-size: 20px; }
+
+.sheet .field, .sheet .chips { margin: 0 0 14px; }
+.sheet .label { display: block; color: var(--dim); font-size: 13px; margin: 0 0 4px; padding: 0; }
+.sheet input[type='text'], .sheet input[type='datetime-local'], .sheet textarea, .sheet select {
+  font: inherit;
+  color: inherit;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 0;
+}
+.sheet input[type='text'], .sheet textarea, .sheet .field > select { width: 100%; }
+.sheet textarea { resize: vertical; }
+
+.sheet .chips { display: flex; flex-wrap: wrap; gap: 8px; border: 0; padding: 0; }
+.sheet .chips legend { float: left; width: 100%; }
+.sheet .chip { position: relative; }
+.sheet .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; }
+.sheet .chip span {
+  display: inline-block;
+  background: var(--chip);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+.sheet .chip input:checked + span { background: var(--accent); color: var(--on-accent); }
+.sheet .chip input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.sheet .custom { margin-top: 10px; }
+.sheet .custom .chips { margin-bottom: 10px; }
+.sheet .units { display: flex; flex-wrap: wrap; gap: 8px; }
+.sheet .unit { display: inline-flex; align-items: center; gap: 6px; }
+
+.sheet .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.sheet .row input { flex: 1; }
+.sheet .check { display: flex; align-items: center; gap: 10px; }
+.sheet .check input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
+
+.sheet .hint, .sheet .error { font-size: 13px; margin: 4px 0 0; }
+.sheet .hint { color: var(--dim); }
+.sheet .error { color: var(--red); }
+.sheet .hint:empty, .sheet .error:empty { display: none; }
+.sheet span.hint { display: block; }
+
+.sheet button { border: 0; border-radius: 999px; padding: 8px 14px; }
+.sheet .pill { background: var(--chip); }
+.sheet .pill:disabled { opacity: 0.4; cursor: default; }
+.sheet .text { background: none; }
+.sheet .danger { color: var(--red); }
+.sheet .save { background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.sheet .actions { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 18px; }
+.sheet .actions .danger { margin-right: auto; padding-left: 0; }
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

@@ -1,0 +1,39 @@
+{
+  "about": "Remote holds a tombstone for 1 at now-10m; local undid the deletion (re-added with updated now-5m, newer), so the record survives and the tombstone is kept too.",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999700000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799999400000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1799992800000,"expires":1800079200000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":0,"cleared":false,"custom":false,"updated":1799999700000}
+    ],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1799999400000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}

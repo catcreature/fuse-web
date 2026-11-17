@@ -1,0 +1,23 @@
+/* Drag to reorder: the lifted card follows the pointer, the others slide out of its way. */
+#list li { touch-action: pan-y; }
+#list.dragging, #list.dragging * { user-select: none; -webkit-user-select: none; }
+#list.dragging li:not(.lifted) { transition: transform 150ms ease; }
+#list li.lifted {
+  z-index: 2;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+@media (prefers-reduced-motion: reduce) {
+  #list.dragging li:not(.lifted) { transition: none; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

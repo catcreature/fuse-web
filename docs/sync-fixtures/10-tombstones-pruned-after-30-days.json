@@ -1,0 +1,42 @@
+{
+  "about": "now - at > 30 d is dropped: 1 (30 d + 1 ms) and 3 (31 d) go, 2 (exactly 30 d) stays. Pruning comes first (step 1), so pruned 1 no longer kills remote history record 1 (updated now-40d) and it survives.",
+  "now": 1800000000000,
+  "local": {
+    "format": 2,
+    "tasks": [],
+    "history": [],
+    "matches": [],
+    "deleted": [
+      {"id":1,"at":1797407999999},
+      {"id":2,"at":1797408000000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "remote": {
+    "format": 2,
+    "tasks": [],
+    "history": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1796544000000,"expires":1796630400000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1796630400000,"cleared":false,"custom":false,"updated":1796544000000}
+    ],
+    "matches": [],
+    "deleted": [
+      {"id":3,"at":1797321600000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  },
+  "expected": {
+    "format": 2,
+    "tasks": [],
+    "history": [
+      {"id":1,"title":"t1","notes":"","priority":1,"created":1796544000000,"expires":1796630400000,"extensions":0,"doneAt":0,"warn":-1,"remindAt":0,"warned":false,"reminded":false,"repeat":false,"snoozeAt":0,"endedAt":1796630400000,"cleared":false,"custom":false,"updated":1796544000000}
+    ],
+    "matches": [],
+    "deleted": [
+      {"id":2,"at":1797408000000}
+    ],
+    "orderAt": 0,
+    "doneGone": 0
+  }
+}
