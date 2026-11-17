@@ -2,6 +2,12 @@
 // and bump "version" in package.json.
 
 export const WHATS_NEW: [string, string[]][] = [
+  ['0.3.1', [
+    'A simpler look: just your list, with History and Settings at the top.',
+    'Fits any window, from a phone to a wide screen; on a big screen, Burned out recently and sync sit beside the list.',
+    'Backup and restore moved into Settings.',
+    'The website now wears the Fuse app\'s own icon.',
+  ]],
   ['0.3.0', [
     'Settings (the gear): theme, accent colour, quiet hours, Strict 24 h and Calm mode.',
     'A History page: search what you did, bring a task back, or clear it all.',

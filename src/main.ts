@@ -13,7 +13,7 @@ import {
   quiet, rearm, snoozeDue, sorted, sweep, warningDue,
 } from './tasks';
 import { here, local } from './time';
-import { initViews } from './views';
+import { currentView, initViews } from './views';
 import { WHATS_NEW, whatsNew } from './whatsnew';
 
 const VERSION = WHATS_NEW[0][0];
@@ -118,6 +118,9 @@ function card(t: Task, now: number): HTMLLIElement {
     store.stamp(t);
     commit();
   };
+  // A 44 px hit area round the 22 px circle.
+  const tickBox = el('label', 'tick');
+  tickBox.append(tick);
   const text = el('div', 'card-text');
   text.setAttribute('role', 'button');
   text.tabIndex = 0;
@@ -145,7 +148,7 @@ function card(t: Task, now: number): HTMLLIElement {
       commit();
     });
   };
-  li.append(burn, tick, text, del);
+  li.append(burn, tickBox, text, del);
   return li;
 }
 
@@ -208,6 +211,9 @@ function render() {
   list.replaceChildren(...shown.map((t) => card(t, now)));
   if (shown.length === 0) list.append(el('li', 'empty', 'Nothing burning. Add a task to light its fuse.'));
   const open = store.tasks.filter((t) => !isDone(t));
+  $('list-bar').hidden = shown.length === 0;
+  $('open-count').textContent = `${open.length} open`;
+  syncCard();
   const next = open.reduce<Task | null>((a, t) => (!a || t.expires < a.expires ? t : a), null);
   $('summary').textContent = next
     ? `${open.length} open · next burns out in ${hm(next.expires - now)}`
@@ -258,17 +264,22 @@ initOrder({
   render,
 });
 
-$('open-settings').onclick = () => openSettings({ store, commit, refresh, render, sync });
+const settings = () => openSettings({ store, commit, refresh, render, sync, backup, restore, version: VERSION });
+$('open-settings').onclick = settings;
 
-$('backup').onclick = () => {
+/** Save a backup (Settings, Backup). */
+function backup() {
   const a = el('a');
   a.href = URL.createObjectURL(new Blob([store.backupText()], { type: 'application/json' }));
   a.download = 'fuse-backup.json';
   a.click();
   URL.revokeObjectURL(a.href);
-};
+}
 const file = $<HTMLInputElement>('file');
-$('restore').onclick = () => file.click();
+/** Restore a backup (Settings, Backup): the file picker; what's picked lands in file.onchange. */
+function restore() {
+  file.click();
+}
 file.onchange = async () => {
   const f = file.files?.[0];
   file.value = '';
@@ -287,13 +298,35 @@ file.onchange = async () => {
   });
 };
 
-// "Created by catcreature": seven taps on the version line.
-let taps = 0;
-const version = $('version');
-version.textContent = `Fuse for the web ${VERSION}`;
-version.onclick = () => {
-  if (++taps === 7) version.textContent = `Fuse for the web ${VERSION} · Created by catcreature`;
-};
+/** The rail's Sync card (wide windows only): the status line as Settings shows it, or a way in to set it up. */
+function syncCard() {
+  const box = $('sync-card');
+  if (!sync.config.token) {
+    const set = el('button', 'link', 'Set up');
+    set.type = 'button';
+    set.onclick = settings;
+    box.replaceChildren('Sync off · ', set);
+    return;
+  }
+  const status = sync.status || (sync.busy ? 'Syncing…' : 'Not synced yet');
+  if (box.textContent !== `Sync: ${status}`) box.textContent = `Sync: ${status}`;
+}
+
+// Keys: "n" goes to the add bar on the list, "/" to the search on History; never while typing or in a sheet.
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey || e.metaKey || e.altKey || e.isComposing) return;
+  const target = e.target as HTMLElement;
+  if (target.closest('input, textarea, select, [contenteditable]') || document.querySelector('dialog[open]')) return;
+  if (e.key === 'n' && currentView() === '') {
+    e.preventDefault();
+    quick.focus();
+  } else if (e.key === '/' && currentView() === 'history') {
+    const search = document.querySelector<HTMLInputElement>('#history-view .h-search');
+    if (!search) return;
+    e.preventDefault();
+    search.focus();
+  }
+});
 
 store.onChange = render;
 // The sync's own result redraws through apply, so it never sets off another sync by itself.
@@ -310,6 +343,7 @@ const sync = new Sync({
   },
   onSaveError: () => banner(SAVE_FAILED),
 });
+sync.listen(syncCard);
 initHistory({ store, zone, commit, undo });
 initViews(document.querySelector('main')!);
 dark.onchange = render;

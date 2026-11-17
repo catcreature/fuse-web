@@ -42,6 +42,7 @@ npm run dev                             # localhost
   network-first with the cached page offline, and everything else stale-while-revalidate (hashed `assets/*` work
   offline after the first visit). **Bump `CACHE` in `sw.js` every release.** Icons: `public/icons/*.svg` by hand;
   the PNGs (`icon-192`, `icon-512`, `maskable-512`, `apple-touch-icon`) come from `python scripts/icons.py` (Pillow).
+  Since 0.3.1 the art is the Android app's launcher icon (see 0.3.1).
 - `src/whatsnew.ts`: every release adds its lines (newest first) and bumps `package.json`'s version. A fresh start
   sees the first-run guide instead, never What's new.
 
@@ -98,6 +99,27 @@ open, Save / Restore a backup (Android-compatible), first-run guide, What's new,
     still points at the live record after a sync.
 - Built and unit-tested only (fake GitHub in `test/github.test.ts`); not opened in a browser, never run against
   the real repo.
+
+## 0.3.1: simpler, fits every window
+
+- The user asked for "simpler and more like browser dimension compatible". Header is just "Fuse" + summary with
+  History and Settings as SVG icon buttons; Sort moved to a slim toolbar above the list ("3 open" · Sort); Save /
+  Restore a backup and the version line (7-tap egg) moved into Settings' last section, Backup (`settings.ts` gets
+  `backup`, `restore`, `version` from `main.ts`; Restore closes the sheet first, since a restore replaces settings).
+  No page footer. The hidden `#file` input sits outside `<main>`.
+- Layout, mobile first: one column `min(100% - 32px, 680px)` with safe-area insets (`viewport-fit=cover`). In
+  `index.html`, `#rail` (`#cards`, `#burned`, `#sync-card`) comes before `.col` (banner, add bar, `#list-bar`,
+  `#list`); below 1024 px `.layout` is a flex column, `.col` is `display: contents` and `order` puts the rail between
+  the banner and the add bar (Sync card hidden). From 1024 px `.layout` is a grid `minmax(0, 680px) 300px` with a
+  32 px gap, the rail sticky. `syncCard()` in `main.ts` redraws on every `render()` and on `sync.listen`.
+- Sheets: a bottom sheet below 640 px, a centred modal from 640 px. Touch targets 44 px, one `:focus-visible` ring,
+  reduced motion honoured. Keys: `n` focuses the add bar, `/` the History search (never while typing or in a sheet).
+- Fixed on the way: `#list li > *` had made `.burn` `position: relative`, a grid item of its own.
+- The icon is the Android app's (`fuse/.../drawable/ic_launcher_foreground.xml`: white fuse, ember spark, rays on
+  #1B1C20), replacing the flame. `icons/maskable.svg` is it full-bleed; `icons/icon.svg` and `favicon.svg` round the
+  square (rx 24 of 108) and scale the art 1.35x round the centre; the header carries an inline copy (28 px).
+  `scripts/icons.py` draws the PNGs from the same art (4x, LANCZOS; segments + vertex discs, since Pillow's curve
+  joints leave gaps).
 
 ## The plan, phase by phase (one at a time; each its own release)
 

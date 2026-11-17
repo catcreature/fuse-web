@@ -1,23 +1,42 @@
 /* The task editor's bottom sheet (editor.ts). Colours are style.css's tokens. */
 .card-text { cursor: pointer; }
 
+/* Below 640 px a bottom sheet, full width; from 640 px a centred modal. Both scroll inside. */
 dialog.sheet {
   box-sizing: border-box;
   width: 100%;
-  max-width: 560px;
+  max-width: 100%;
   max-height: 92vh;
   max-height: 92dvh;
-  margin: auto auto 0;
-  padding: 16px;
+  margin: auto 0 0;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
   overflow: auto;
+  overscroll-behavior: contain;
   border: 0;
   border-radius: 20px 20px 0 0;
   background: var(--card);
   color: var(--ink);
 }
+@media (min-width: 640px) {
+  dialog.sheet {
+    width: min(560px, 100% - 48px);
+    max-height: 85vh;
+    max-height: 85dvh;
+    margin: auto;
+    padding: 20px;
+    border-radius: 16px;
+  }
+}
 dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 .sheet [hidden] { display: none !important; }
-.sheet header { margin-bottom: 12px; }
+.sheet header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 12px;
+  margin-bottom: 12px;
+}
 .sheet h2 { margin: 0; font-size: 20px; }
 
 .sheet .field, .sheet .chips { margin: 0 0 14px; }
@@ -25,6 +44,8 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 .sheet input[type='text'], .sheet input[type='datetime-local'], .sheet textarea, .sheet select {
   font: inherit;
   color: inherit;
+  min-height: 44px;
+  max-width: 100%;
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 10px;
@@ -39,10 +60,12 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 .sheet .chip { position: relative; }
 .sheet .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; }
 .sheet .chip span {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   background: var(--chip);
   border-radius: 999px;
-  padding: 8px 14px;
+  padding: 0 16px;
   cursor: pointer;
 }
 .sheet .chip input:checked + span { background: var(--accent); color: var(--on-accent); }
@@ -54,7 +77,7 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 
 .sheet .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .sheet .row input { flex: 1; }
-.sheet .check { display: flex; align-items: center; gap: 10px; }
+.sheet .check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
 .sheet .check input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
 
 .sheet .hint, .sheet .error { font-size: 13px; margin: 4px 0 0; }
@@ -63,7 +86,7 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 .sheet .hint:empty, .sheet .error:empty { display: none; }
 .sheet span.hint { display: block; }
 
-.sheet button { border: 0; border-radius: 999px; padding: 8px 14px; }
+.sheet button { min-height: 44px; border: 0; border-radius: 999px; padding: 0 16px; }
 .sheet .pill { background: var(--chip); }
 .sheet .pill:disabled { opacity: 0.4; cursor: default; }
 .sheet .text { background: none; }

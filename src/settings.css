@@ -13,7 +13,7 @@
 .sheet .swatches { display: flex; flex-wrap: wrap; gap: 12px; border: 0; padding: 0; margin: 0 0 14px; }
 .sheet .swatches legend { float: left; width: 100%; }
 .sheet .swatch { position: relative; width: 32px; height: 32px; }
-.sheet .swatch input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.sheet .swatch input { position: absolute; opacity: 0; inset: -6px; margin: 0; cursor: pointer; }
 .sheet .swatch span {
   display: block;
   width: 32px;
@@ -27,7 +27,7 @@
 .sheet .swatch input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 5px; }
 
 /* Switches: a 40x24 pill track with a knob, the accent when on. */
-.sheet .switch-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sheet .switch-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; }
 .sheet input.switch {
   appearance: none;
   -webkit-appearance: none;
@@ -64,6 +64,7 @@
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 10px;
+  min-height: 44px;
   padding: 8px 10px;
   min-width: 0;
 }
@@ -76,6 +77,10 @@
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: 10px;
+  min-height: 44px;
   padding: 10px 12px;
   min-width: 0;
 }
+
+/* Backup: the version line under its buttons (seven taps: the easter egg). */
+.sheet .version { margin-top: 12px; user-select: none; -webkit-user-select: none; }

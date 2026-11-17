@@ -1,5 +1,5 @@
-// Settings: a bottom sheet like the editor's (Look, Tasks, Alerts, Extras, Sync). Nothing applies until Save; Esc or
-// Cancel leaves everything as it was, except Sync's own buttons (Sync now, Remove), which act on the tap.
+// Settings: a sheet like the editor's (Look, Tasks, Alerts, Extras, Sync, Backup). Nothing applies until Save; Esc or
+// Cancel leaves everything as it was, except Sync's own buttons (Sync now, Remove) and Backup's, which act on the tap.
 // applyLook() puts theme, accent and Calm mode on <html> for style.css.
 
 import './editor.css';
@@ -15,6 +15,12 @@ export interface SettingsDeps {
   refresh: () => void;
   render: () => void;
   sync: Sync;
+  /** Save a backup: downloads it. */
+  backup: () => void;
+  /** Restore a backup: opens the file picker (main.ts takes it from there). */
+  restore: () => void;
+  /** The version line's number. */
+  version: string;
 }
 
 /** The five accents, light and dark (the Android app's colors.xml and values-night), as 0xAARRGGBB. */
@@ -71,6 +77,8 @@ const fromTime = (v: string) => {
 const keepLabel = (d: number) => (d === 0 ? 'Forever' : d === 365 ? '1 year' : `${d} days`);
 
 let seq = 0;
+/** "Created by catcreature": seven taps on the version line, counted across openings. */
+let taps = 0;
 
 export function openSettings(deps: SettingsDeps) {
   const { store } = deps;
@@ -321,6 +329,34 @@ export function openSettings(deps: SettingsDeps) {
   const unlisten = sync.listen(showStatus);
   showToken();
   showStatus(sync.status);
+
+  // Backup (moved here from the page's footer in 0.3.1). Restore closes the sheet first: what it brings back
+  // replaces the settings too, which a later Save here would otherwise undo.
+  const backupBox = section('Backup');
+  const backupRow = el('div', 'row');
+  const saveBackup = el('button', 'pill', 'Save a backup');
+  saveBackup.type = 'button';
+  saveBackup.id = 'backup';
+  saveBackup.onclick = () => deps.backup();
+  const restore = el('button', 'pill', 'Restore a backup');
+  restore.type = 'button';
+  restore.id = 'restore';
+  restore.onclick = () => {
+    dialog.close();
+    deps.restore();
+  };
+  backupRow.append(saveBackup, restore);
+  const version = el('p', 'hint version');
+  version.id = 'version';
+  const showVersion = () => {
+    version.textContent = `Fuse for the web ${deps.version}${taps >= 7 ? ' · Created by catcreature' : ''}`;
+  };
+  version.onclick = () => {
+    taps++;
+    showVersion();
+  };
+  showVersion();
+  backupBox.append(backupRow, version);
 
   // Footer.
   const actions = el('div', 'actions');

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#D9480F" />
     <title>Fuse</title>
@@ -13,35 +13,77 @@
   </head>
   <body>
     <main>
-      <header>
-        <h1>Fuse</h1>
-        <a id="open-history" href="#/history" class="icon" aria-label="History">🕘</a>
-        <select id="sort" aria-label="Sort tasks" autocomplete="off">
-          <option value="MINE">My order</option>
-          <option value="EXPIRING">Expiring soonest</option>
-          <option value="PRIORITY">Priority</option>
-          <option value="NEWEST">Newest first</option>
-          <option value="OLDEST">Oldest first</option>
-        </select>
-        <button id="open-settings" type="button" aria-label="Settings" class="icon">⚙</button>
-        <p id="summary"></p>
+      <header class="top">
+        <div class="brand">
+          <h1>
+            <svg class="logo" viewBox="0 0 108 108" width="28" height="28" aria-hidden="true" focusable="false">
+              <rect width="108" height="108" rx="24" fill="#1B1C20" />
+              <g transform="translate(54 54) scale(1.35) translate(-54 -54)" fill="none" stroke-linecap="round">
+                <path d="M34,74C44,74 44,59 54,59S64,44 69,41.5" stroke="#FFFFFF" stroke-width="5" />
+                <circle cx="71.5" cy="36.5" r="6.5" fill="#FF7A3D" />
+                <path d="M71.5,23V26.5M58,36.5H61.5M81.5,36.5H85M61.8,26.8L64.3,29.3M81.2,26.8L78.7,29.3" stroke="#FFB74D" stroke-width="3.5" />
+              </g>
+            </svg>Fuse
+          </h1>
+          <p id="summary"></p>
+        </div>
+        <div class="top-actions">
+          <a id="open-history" href="#/history" class="icon" aria-label="History">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <path d="M3 12a9 9 0 1 0 2.64-6.36L3 8.3" />
+              <path d="M3 3.5v4.8h4.8" />
+              <path d="M12 7.5V12l3 2" />
+            </svg>
+          </a>
+          <button id="open-settings" type="button" class="icon" aria-label="Settings">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+          </button>
+        </div>
       </header>
-      <div id="banner" role="status" hidden></div>
-      <section id="cards"></section>
-      <form id="add" autocomplete="off">
-        <input id="quick" type="text" enterkeyhint="done" aria-label="New task" maxlength="200" />
-        <button type="submit" aria-label="Add task">+</button>
-        <p id="preview" aria-live="polite"></p>
-      </form>
-      <section id="burned" hidden></section>
-      <ul id="list"></ul>
-      <footer>
-        <button id="backup" type="button">Save a backup</button>
-        <button id="restore" type="button">Restore a backup</button>
-        <input id="file" type="file" accept="application/json,.json" hidden />
-        <p id="version"></p>
-      </footer>
+      <!-- Below 1024 px the rail's cards sit between the banner and the add bar (.layout is a column, .col dissolves);
+           from 1024 px .layout is two columns and the rail sticks beside the list. -->
+      <div class="layout">
+        <aside id="rail">
+          <section id="cards"></section>
+          <section id="burned" hidden></section>
+          <div id="sync-card"></div>
+        </aside>
+        <div class="col">
+          <div id="banner" role="status" hidden></div>
+          <form id="add" autocomplete="off">
+            <div class="add-field">
+              <input id="quick" type="text" enterkeyhint="done" aria-label="New task" maxlength="200" />
+              <button type="submit" aria-label="Add task">
+                <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </button>
+            </div>
+            <p id="preview" aria-live="polite"></p>
+          </form>
+          <div id="list-bar">
+            <span id="open-count"></span>
+            <span class="sort">
+              <select id="sort" aria-label="Sort tasks" autocomplete="off">
+                <option value="MINE">My order</option>
+                <option value="EXPIRING">Expiring soonest</option>
+                <option value="PRIORITY">Priority</option>
+                <option value="NEWEST">Newest first</option>
+                <option value="OLDEST">Oldest first</option>
+              </select>
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </span>
+          </div>
+          <ul id="list"></ul>
+        </div>
+      </div>
     </main>
+    <input id="file" type="file" accept="application/json,.json" hidden />
     <div id="undo" role="status" hidden><span></span><button type="button">Undo</button></div>
     <script type="module" src="/src/main.ts"></script>
   </body>
