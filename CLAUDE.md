@@ -15,6 +15,15 @@ npm install; npm test; npm run build    # dist/ is the whole site, static files 
 npm run dev                             # localhost
 ```
 
+## Hosting
+
+- Site: https://catcreature.github.io/fuse-web/ (GitHub Pages, served from the `gh-pages` branch of the public repo
+  `catcreature/fuse-web`; `main` holds the source). Not from Actions: the gh token has no `workflow` scope.
+- Deploy with `npm run deploy`: tests, builds, then `scripts/deploy.mjs` force-pushes `dist/` (plus `.nojekyll`) as
+  a one-commit `gh-pages`. Pushing `main` does not deploy.
+- Every release must bump `CACHE` in `public/sw.js`, or installed copies keep the old page.
+- Sync data: `fuse.json` in the private repo `catcreature/fuse-data` (created empty; the apps write it on first sync).
+
 ## How it works
 
 - `src/time.ts`: wall-clock maths in a named zone via `Intl` (stands in for `java.time`). Days are epoch days.
