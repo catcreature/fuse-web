@@ -1,0 +1,9 @@
+Fuse for the web includes a third-party font.
+
+Poppins
+  Copyright 2020 The Poppins Project Authors (https://github.com/itfoundry/Poppins)
+  Files: src/fonts/poppins-regular.ttf, src/fonts/poppins-bold.ttf
+  Licensed under the SIL Open Font License, Version 1.1 (https://openfontlicense.org).
+  The copies here came from the Emberr app (https://github.com/emberr-app/Emberr), which ships
+  the same OFL files; 0.4.0's Emberr and Soft palettes are ported from its colour schemes and
+  draw in this font, as Emberr does. Self-hosted, so the page loads no third-party resource.

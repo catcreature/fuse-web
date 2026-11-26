@@ -1,3 +1,22 @@
+/* 0.4.0 Palette: Poppins, the font Emberr draws with (its Type.kt FontStylePreference.POPPINS).
+   Self-hosted from src/fonts, so the page needs no CDN and works offline. Only the two weights the
+   CSS asks for (400, and 700 for its font-weight: 600 rules). SIL Open Font License 1.1,
+   Copyright 2020 The Poppins Project Authors. See NOTICE. */
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/poppins-regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./fonts/poppins-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Colours are the Android app's (res/values/colors.xml and values-night).
    Light on :root; dark when the device is dark (unless Settings picked Light) or Settings picked Dark.
    The accent (Settings) is data-accent on <html>; Ember is the default. */
@@ -22,6 +41,15 @@
   --ash: rgba(74, 44, 30, 0.14);
   --done: #2f6fdb;
   --missed: #c2410c;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* 0.4.3: Emberr draws smaller. --type-base is the palette's own scale, --type-step one of its five
+     FontSizePreference steps; every font-size in the app is calc(px * --type-scale). */
+  --type-base: 1;
+  --type-step: 1;
+  --type-scale: calc(var(--type-base) * var(--type-step));
+  /* A flat card's hairline. The Fuse palette has none, so the ring is simply not drawn. */
+  --hairline: transparent;
+  --ring: none;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
@@ -67,10 +95,103 @@
   --done: #5a8be8;
   --missed: #e06a34;
 }
+/* 0.4.0 Palette, ported from emberr-app/Emberr's ColorThemePreference.EMBERR and .SOFT
+   (shared/src/commonMain/kotlin/com/emberr/ui/theme/ColorThemes.kt), the only two of its fourteen the
+   user asked for. bg <- background, card <- surface, chip <- surfaceContainerHigh, line <- outlineVariant,
+   ink <- onSurface, dim <- onSurfaceVariant. Emberr's surface is DARKER than its background in light
+   mode, so cards sit grey on a white page: that is the look. Each palette also brings Poppins and the
+   hairline ring instead of Fuse's plain cards. data-palette='fuse' overrides nothing. */
+:root[data-palette='emberr'],
+:root[data-palette='soft'] {
+  --font: 'Poppins', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* 16 x 0.9 = 14.4 and 14 x 0.9 = 12.6: Emberr's 15 sp body over 13 sp labels. */
+  --type-base: 0.9;
+  --ring: 0 0 0 1px var(--hairline);
+  --hairline: rgba(0, 0, 0, 0.12);
+}
+:root[data-palette='emberr'] {
+  --bg: #ffffff;
+  --mono: #0d0d0d;
+  --on-mono: #efefef;
+  --card: #efefef;
+  --chip: #d8d8d8;
+  --line: #c7c7c7;
+  --ink: #0d0d0d;
+  --dim: #474747;
+}
+:root[data-palette='soft'] {
+  --bg: #f2f2f2;
+  --mono: #1c1c1c;
+  --on-mono: #f2f2f2;
+  --card: #e6e6e6;
+  --chip: #d4d4d4;
+  --line: #cfcfcf;
+  --ink: #1c1c1c;
+  --dim: #4a4a4a;
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-palette='emberr']:not([data-theme='light']),
+  :root[data-palette='soft']:not([data-theme='light']) { --hairline: rgba(255, 255, 255, 0.15); }
+  :root[data-palette='emberr']:not([data-theme='light']) {
+    --bg: #000000;
+    --mono: #efefef;
+    --on-mono: #0d0d0d;
+    --card: #1e1e1e;
+    --chip: #363636;
+    --line: #474747;
+    --ink: #efefef;
+    --dim: #c7c7c7;
+  }
+  :root[data-palette='soft']:not([data-theme='light']) {
+    --bg: #101010;
+    --mono: #e6e6e6;
+    --on-mono: #101010;
+    --card: #1c1c1c;
+    --chip: #313131;
+    --line: #2c2c2c;
+    --ink: #e6e6e6;
+    --dim: #bdbdbd;
+  }
+}
+:root[data-palette='emberr'][data-theme='dark'],
+:root[data-palette='soft'][data-theme='dark'] { --hairline: rgba(255, 255, 255, 0.15); }
+:root[data-palette='emberr'][data-theme='dark'] {
+  --bg: #000000;
+  --mono: #efefef;
+  --on-mono: #0d0d0d;
+  --card: #1e1e1e;
+  --chip: #363636;
+  --line: #474747;
+  --ink: #efefef;
+  --dim: #c7c7c7;
+}
+:root[data-palette='soft'][data-theme='dark'] {
+  --bg: #101010;
+  --mono: #e6e6e6;
+  --on-mono: #101010;
+  --card: #1c1c1c;
+  --chip: #313131;
+  --line: #2c2c2c;
+  --ink: #e6e6e6;
+  --dim: #bdbdbd;
+}
+/* 0.4.3: Emberr's five text sizes (its FontSizePreference), as factors of its Default profile. */
+:root[data-text='xs'] { --type-step: 0.8667; }
+:root[data-text='s'] { --type-step: 0.9333; }
+:root[data-text='m'] { --type-step: 1; }
+:root[data-text='l'] { --type-step: 1.0667; }
+:root[data-text='xl'] { --type-step: 1.1333; }
 :root[data-accent='ocean'] { --accent: var(--ocean); }
 :root[data-accent='forest'] { --accent: var(--forest); }
 :root[data-accent='grape'] { --accent: var(--grape); }
 :root[data-accent='rose'] { --accent: var(--rose); }
+/* 0.4.0: Emberr has no accent colour — its primary and secondary are both CharcoalNoir (CloudVeil in the
+   dark), so chips, buttons, headings and rings go monochrome with it. After the accents, so it wins; the
+   five Fuse accents still colour the Fuse palette. The fuse itself still burns through amber to red. */
+:root[data-palette='emberr'], :root[data-palette='soft'] {
+  --accent: var(--mono);
+  --on-accent: var(--on-mono);
+}
 /* Calm mode: everything holds still; the burn still follows the clock on each redraw. */
 [data-calm] *, [data-calm] *::before, [data-calm] *::after { animation: none !important; transition: none !important; }
 
@@ -79,7 +200,9 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
-  font: 16px/1.4 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-family: var(--font);
+  font-size: calc(16px * var(--type-scale));
+  line-height: 1.4;
 }
 button, select, input, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -96,14 +219,14 @@ main, .view {
   padding-top: max(16px, env(safe-area-inset-top));
   padding-bottom: calc(96px + env(safe-area-inset-bottom));
 }
-h1 { margin: 0; font-size: clamp(22px, 2vw + 16px, 28px); line-height: 1.2; }
+h1 { margin: 0; font-size: calc(clamp(22px, 2vw + 16px, 28px) * var(--type-scale)); line-height: 1.2; }
 
 /* Header: the name and summary on the left, History and Settings on the right. */
 header.top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .brand { min-width: 0; padding-top: 6px; }
 .brand h1 { display: flex; align-items: center; gap: 8px; }
 .logo { flex: none; width: 28px; height: 28px; }
-#summary { color: var(--dim); font-size: 14px; margin: 2px 0 0; text-wrap: pretty; }
+#summary { color: var(--dim); font-size: calc(14px * var(--type-scale)); margin: 2px 0 0; text-wrap: pretty; }
 .top-actions { display: flex; gap: 4px; flex: none; }
 .icon {
   display: inline-flex;
@@ -118,7 +241,7 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   border-radius: 50%;
   background: transparent;
   color: inherit;
-  font-size: 20px;
+  font-size: calc(20px * var(--type-scale));
   line-height: 1;
   text-decoration: none;
 }
@@ -161,9 +284,10 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   background: var(--card);
   border-radius: 12px;
   padding: 12px 14px;
+  box-shadow: var(--ring);
 }
 #banner { margin: 0 0 12px; }
-.note h2 { margin: 0 0 6px; font-size: 16px; }
+.note h2 { margin: 0 0 6px; font-size: calc(16px * var(--type-scale)); }
 .note ul { margin: 0 0 10px; padding-left: 18px; }
 .note button {
   background: var(--chip);
@@ -172,7 +296,7 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   min-height: 44px;
   padding: 8px 16px;
 }
-#sync-card { color: var(--dim); font-size: 14px; }
+#sync-card { color: var(--dim); font-size: calc(14px * var(--type-scale)); }
 #sync-card .link {
   background: none;
   border: 0;
@@ -211,13 +335,13 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   color: var(--on-accent);
 }
 #add button svg { stroke-width: 2.25; }
-#preview { color: var(--dim); font-size: 14px; margin: 6px 2px 0; }
+#preview { color: var(--dim); font-size: calc(14px * var(--type-scale)); margin: 6px 2px 0; }
 #preview:empty { display: none; }
 
 /* The list's toolbar: the open count, and Sort as plain text with a chevron. */
 #list-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 8px; }
 #list-bar[hidden] { display: none; }
-#open-count { color: var(--dim); font-size: 14px; padding-left: 2px; }
+#open-count { color: var(--dim); font-size: calc(14px * var(--type-scale)); padding-left: 2px; }
 .sort { position: relative; display: inline-flex; align-items: center; color: var(--dim); }
 #sort {
   appearance: none;
@@ -228,7 +352,7 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   border-radius: 8px;
   background: transparent;
   color: inherit;
-  font-size: 14px;
+  font-size: calc(14px * var(--type-scale));
   field-sizing: content;
   cursor: pointer;
 }
@@ -250,8 +374,23 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   border-radius: 12px;
   padding: 14px 12px;
   border-left: 4px solid var(--low);
+  box-shadow: var(--ring);
 }
 #list li.empty { display: block; background: none; border: 0; }
+/* 0.4.1: the done group's fold row — a plain line, not a card. */
+#list li.done-row { display: block; background: none; border: 0; box-shadow: none; padding: 0; }
+#list li.done-row button {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  background: none;
+  border: 0;
+  padding: 0 4px;
+  color: var(--dim);
+  font-size: calc(14px * var(--type-scale));
+  font-weight: 600;
+}
 #list li.high { border-left-color: var(--red); }
 /* The burned part: ash from the right, its left edge glowing in the fuse colour. */
 .burn {
@@ -301,9 +440,9 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   transform: rotate(45deg);
 }
 .card-text { min-width: 0; border-radius: 6px; }
-.title { font-size: 16px; overflow-wrap: anywhere; }
-.meta { color: var(--dim); font-size: 14px; margin: 2px 0 0; }
-#list .meta { font-size: 13px; }
+.title { font-size: calc(16px * var(--type-scale)); overflow-wrap: anywhere; }
+.meta { color: var(--dim); font-size: calc(14px * var(--type-scale)); margin: 2px 0 0; }
+#list .meta { font-size: calc(13px * var(--type-scale)); }
 .delete {
   min-width: 44px;
   min-height: 44px;
@@ -313,7 +452,7 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   border: 0;
   border-radius: 50%;
   color: var(--dim);
-  font-size: 18px;
+  font-size: calc(18px * var(--type-scale));
 }
 @media (hover: hover) and (pointer: fine) {
   #list li .delete { opacity: 0; transition: opacity 0.15s; }
@@ -336,6 +475,22 @@ header.top { display: flex; align-items: flex-start; justify-content: space-betw
   color: #fff;
   border-radius: 12px;
   padding: 4px 6px 4px 14px;
+}
+/* 0.4.2 Glass, from Emberr's EmberrBlur.kt. Regular, "chrome floating over content": the tint at
+   alpha 0.45 over a 32 dp blur, no grain. Undo floats over the list, so it takes Regular; the add
+   bar takes it too. A browser without backdrop-filter keeps the solid colour, which is Emberr's own
+   fallbackTint, so nothing here needs a media query to stay readable. */
+@supports (((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) and (color: color-mix(in srgb, red 50%, transparent))) {
+  [data-glass] #undo {
+    background: rgba(26, 29, 35, 0.45);
+    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(32px);
+  }
+  [data-glass] #quick {
+    background: color-mix(in srgb, var(--card) 45%, transparent);
+    -webkit-backdrop-filter: blur(32px);
+    backdrop-filter: blur(32px);
+  }
 }
 #undo[hidden], #banner[hidden] { display: none; }
 #undo span { min-width: 0; overflow-wrap: anywhere; }

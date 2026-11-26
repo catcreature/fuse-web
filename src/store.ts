@@ -27,8 +27,10 @@ export interface Settings {
   welcomed: boolean;
   /** 'system' follows the device. */
   theme: 'system' | 'light' | 'dark';
-  /** 0..4: Ember, Ocean, Forest, Grape, Rose. */
+  /** 0..4: Ember, Ocean, Forest, Grape, Rose. Only the 'fuse' palette uses it: the others are monochrome. */
   accent: number;
+  /** 0.4.0: 'emberr' and 'soft' are the Emberr app's two schemes, 'fuse' the look up to 0.3.1. */
+  palette: 'emberr' | 'soft' | 'fuse';
   /** Quiet hours: alerts in quietStart..quietEnd (minutes of the day) show only on the page. */
   quiet: boolean;
   quietStart: number;
@@ -37,11 +39,17 @@ export interface Settings {
   strict: boolean;
   /** Calm mode: no animations. */
   calm: boolean;
+  /** 0.4.1: whether the done group is unfolded under its "N done" row. Folded by default. */
+  showDone: boolean;
+  /** 0.4.2: Emberr's frosted chrome on the sheets, the add bar and Undo. On by default. */
+  glass: boolean;
+  /** 0.4.3: one of Emberr's five text sizes (its FontSizePreference). */
+  textSize: 'xs' | 's' | 'm' | 'l' | 'xl';
 }
 
 const DEFAULTS: Settings = {
   warn: DEFAULT_WARN, keep: DEFAULT_KEEP, doneGone: 0, seenNotes: '', welcomed: false,
-  theme: 'system', accent: 0, quiet: true, quietStart: 23 * 60, quietEnd: 7 * 60, strict: false, calm: false,
+  theme: 'system', accent: 0, palette: 'emberr', quiet: true, quietStart: 23 * 60, quietEnd: 7 * 60, strict: false, calm: false, showDone: false, glass: true, textSize: 'm',
 };
 
 export class Store {

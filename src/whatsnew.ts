@@ -2,6 +2,24 @@
 // and bump "version" in package.json.
 
 export const WHATS_NEW: [string, string[]][] = [
+  ['0.4.3', [
+    'Smaller text, the size the Emberr app draws at: its 15 pt body over 13 pt labels.',
+    'Settings, Look, Text size: the same five steps the Emberr app has, Extra small to Extra large.',
+  ]],
+  ['0.4.2', [
+    'Glass: the frosted chrome the Emberr app has. Settings, Look, Glass — on by default.',
+    'Sheets blur the page behind them, and the Undo bar and add bar are frosted panes.',
+  ]],
+  ['0.4.1', [
+    'Finished tasks fold away. They now sit behind a "3 done" row at the bottom of the list — tap it to open or close them, and Fuse remembers which you chose.',
+    'They start folded, so the list shows what is still burning.',
+  ]],
+  ['0.4.0', [
+    'A new look, taken from the Emberr app: Settings, Look, Palette.',
+    'Emberr is what Fuse now opens with — a white page with flat grey cards, a hairline edge instead of a shadow, and Poppins type. Soft is the same in gentler greys.',
+    'Both are monochrome, as the Emberr app is: chips, buttons and headings go black on the light page and white on the dark one. Your fuse still burns through amber to red.',
+    'Prefer the old look? Pick Fuse in the same place. The five accent colours apply to it.',
+  ]],
   ['0.3.1', [
     'A simpler look: just your list, with History and Settings at the top.',
     'Fits any window, from a phone to a wide screen; on a big screen, Burned out recently and sync sit beside the list.',

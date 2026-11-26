@@ -34,6 +34,41 @@ export const ACCENTS = [
 
 const accentOf = (i: number) => ACCENTS[Number.isInteger(i) && i >= 0 && i < ACCENTS.length ? i : 0];
 
+/**
+ * 0.4.0: the palette. 'emberr' and 'soft' are ported from emberr-app/Emberr's own ColorThemePreference
+ * EMBERR and SOFT (its ColorThemes.kt), the only two of its fourteen asked for; the colours live in
+ * style.css under data-palette. Both are monochrome — Emberr's primary and secondary are CharcoalNoir,
+ * CloudVeil in the dark — so they bring their own accent, light and dark, as 0xAARRGGBB.
+ */
+export const PALETTES = [
+  { key: 'emberr', name: 'Emberr', light: 0xff0d0d0d, dark: 0xffefefef },
+  { key: 'soft', name: 'Soft', light: 0xff1c1c1c, dark: 0xffe6e6e6 },
+  { key: 'fuse', name: 'Fuse', light: 0, dark: 0 },
+] as const;
+
+type PaletteKey = (typeof PALETTES)[number]['key'];
+
+const paletteOf = (k: string) => PALETTES.find((p) => p.key === k) ?? PALETTES[0];
+
+/** The key to store, guarding against an older or hand-edited save. */
+export const paletteKey = (k: string): PaletteKey => paletteOf(k).key;
+
+/**
+ * 0.4.3: Emberr's five text sizes (its `FontSizePreference`). The factors live in style.css as
+ * --type-step; this is only the list and the guard.
+ */
+export const TEXT_SIZES = [
+  { key: 'xs', name: 'Extra small' },
+  { key: 's', name: 'Small' },
+  { key: 'm', name: 'Default' },
+  { key: 'l', name: 'Large' },
+  { key: 'xl', name: 'Extra large' },
+] as const;
+
+type TextKey = (typeof TEXT_SIZES)[number]['key'];
+
+export const textKey = (k: string): TextKey => (TEXT_SIZES.find((t) => t.key === k) ?? TEXT_SIZES[2]).key;
+
 const darkQuery = matchMedia('(prefers-color-scheme: dark)');
 
 /** Whether the page is dark now: the picked theme, else the device's. */
@@ -42,14 +77,25 @@ export function isDark(): boolean {
   return t === 'dark' || (t !== 'light' && darkQuery.matches);
 }
 
-/** The picked accent as 0xAARRGGBB for the theme on screen: the fuse's fresh colour. */
-export const accentColor = (s: Settings) => (isDark() ? accentOf(s.accent).dark : accentOf(s.accent).light);
+/**
+ * The accent as 0xAARRGGBB for the theme on screen: the fuse's fresh colour. A monochrome palette's own
+ * primary wins over the five Fuse accents, exactly as its --accent does in the CSS.
+ */
+export const accentColor = (s: Settings) => {
+  const p = paletteOf(s.palette);
+  const mono = isDark() ? p.dark : p.light;
+  return mono !== 0 ? mono : isDark() ? accentOf(s.accent).dark : accentOf(s.accent).light;
+};
 
-/** Theme, accent, Calm mode and Strict 24 h, as settings say. At startup and after Save. */
+/** Palette, theme, accent, Calm mode and Strict 24 h, as settings say. At startup and after Save. */
 export function applyLook(s: Settings) {
   const d = document.documentElement.dataset;
   if (s.theme === 'light' || s.theme === 'dark') d.theme = s.theme;
   else delete d.theme;
+  d.palette = paletteKey(s.palette);
+  if (s.glass) d.glass = '';
+  else delete d.glass;
+  d.text = textKey(s.textSize);
   d.accent = accentOf(s.accent).key;
   if (s.calm) d.calm = '';
   else delete d.calm;
@@ -162,6 +208,13 @@ export function openSettings(deps: SettingsDeps) {
 
   // Look.
   const look = section('Look');
+  const palette = chips(look, 'palette', 'Palette', PALETTES.map((p) => [p.key, p.name]), paletteKey(s.palette));
+  const paletteHint = el('p', 'hint',
+    'Emberr and Soft come from the Emberr app: its monochrome colours and its Poppins type, flat cards with a hairline edge. Fuse is the look up to 0.3.1.');
+  look.append(paletteHint);
+  const textSize = chips(look, 'text', 'Text size', TEXT_SIZES.map((t) => [t.key, t.name]), textKey(s.textSize));
+  const glass = toggle(look, 'glass', 'Glass', s.glass,
+    'Frosted sheets, add bar and Undo, as the Emberr app has. Turn it off for flat, solid ones.');
   const theme = chips(look, 'theme', 'Theme', [['system', 'Like the device'], ['light', 'Light'], ['dark', 'Dark']], s.theme);
   const swatches = el('fieldset', 'swatches');
   swatches.setAttribute('role', 'radiogroup');
@@ -185,6 +238,13 @@ export function openSettings(deps: SettingsDeps) {
     return r;
   });
   look.append(swatches);
+  // Emberr and Soft have no accent colour of their own, so say so rather than look broken.
+  const accentHint = el('p', 'hint', 'Emberr and Soft are monochrome, as the Emberr app is. The accent colours the Fuse palette.');
+  const showAccentHint = () => { accentHint.hidden = palette() === 'fuse'; };
+  showAccentHint();
+  // Radio changes bubble, so picking another palette updates the note at once (nothing applies until Save).
+  look.addEventListener('change', showAccentHint);
+  look.append(accentHint);
 
   // Tasks.
   const tasks = section('Tasks');
@@ -375,6 +435,9 @@ export function openSettings(deps: SettingsDeps) {
     s.theme = t === 'light' || t === 'dark' ? t : 'system';
     const a = accents.findIndex((r) => r.checked);
     s.accent = a < 0 ? 0 : a;
+    s.palette = paletteKey(palette());
+    s.glass = glass.checked;
+    s.textSize = textKey(textSize());
     const oldWarn = s.warn;
     s.warn = Number(warn.value);
     s.keep = Number(keep.value);

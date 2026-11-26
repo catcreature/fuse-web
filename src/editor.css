@@ -28,6 +28,14 @@ dialog.sheet {
   }
 }
 dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
+@supports (((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) and (color: color-mix(in srgb, red 50%, transparent))) {
+  [data-glass] dialog.sheet {
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+  }
+  [data-glass] dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.18); }
+}
 .sheet [hidden] { display: none !important; }
 .sheet header {
   display: flex;
@@ -37,10 +45,10 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
   column-gap: 12px;
   margin-bottom: 12px;
 }
-.sheet h2 { margin: 0; font-size: 20px; }
+.sheet h2 { margin: 0; font-size: calc(20px * var(--type-scale)); }
 
 .sheet .field, .sheet .chips { margin: 0 0 14px; }
-.sheet .label { display: block; color: var(--dim); font-size: 13px; margin: 0 0 4px; padding: 0; }
+.sheet .label { display: block; color: var(--dim); font-size: calc(13px * var(--type-scale)); margin: 0 0 4px; padding: 0; }
 .sheet input[type='text'], .sheet input[type='datetime-local'], .sheet textarea, .sheet select {
   font: inherit;
   color: inherit;
@@ -80,7 +88,7 @@ dialog.sheet::backdrop { background: rgba(0, 0, 0, 0.45); }
 .sheet .check { display: flex; align-items: center; gap: 10px; min-height: 44px; }
 .sheet .check input { width: 20px; height: 20px; margin: 0; accent-color: var(--accent); }
 
-.sheet .hint, .sheet .error { font-size: 13px; margin: 4px 0 0; }
+.sheet .hint, .sheet .error { font-size: calc(13px * var(--type-scale)); margin: 4px 0 0; }
 .sheet .hint { color: var(--dim); }
 .sheet .error { color: var(--red); }
 .sheet .hint:empty, .sheet .error:empty { display: none; }

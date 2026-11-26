@@ -121,6 +121,95 @@ open, Save / Restore a backup (Android-compatible), first-run guide, What's new,
   `scripts/icons.py` draws the PNGs from the same art (4x, LANCZOS; segments + vertex discs, since Pillow's curve
   joints leave gaps).
 
+## 0.4.0: Palette, Emberr's look (the user's request, 2026-11-17)
+
+Not phase 4 of the plan below (that is still the burn styles on canvas): the user asked for "a theme like this"
+from **emberr-app/Emberr** (AGPL-3.0, Compose Multiplatform, not ours), taken from the repository itself, then
+"make ember and soft only, do not make others", and then the Android app and this one. So the same port as
+`fuse/` 0.40.0 + 0.40.1 — keep the two in step if either changes.
+
+Settings, Look, **Palette**: **Emberr** (the new default) | **Soft** | **Fuse** (the look up to 0.3.1).
+`Settings.palette` (a key, not an index, so a hand-edited save can't point at nothing; `paletteKey()` guards it),
+applied by `applyLook` as `data-palette` on `<html>`, like `data-theme` and `data-accent`. It is not in the sync
+file: settings live in their own `fuse.settings` key, so `docs/SYNC.md` is untouched and the fixtures still pass.
+
+- **Colours** (`src/style.css`): `--bg`, `--card`, `--chip`, `--line`, `--ink`, `--dim` per palette, from Emberr's
+  `ColorThemePreference.EMBERR` and `.SOFT` (its `ColorThemes.kt`): bg ← `background`, card ← `surface`,
+  chip ← `surfaceContainerHigh`, line ← `outlineVariant`, ink ← `onSurface`, dim ← `onSurfaceVariant`. **Emberr's
+  surface is darker than its background in light mode**, so cards sit grey on a white page: that is the look.
+  Each palette's dark half is repeated twice, as the base tokens are: once under `prefers-color-scheme: dark`
+  with `:not([data-theme='light'])`, once under `[data-theme='dark']`. The palette blocks sit **after** the base
+  dark blocks, because they match at the same specificity and source order decides.
+- **Monochrome**: Emberr has no accent colour — its `primary` and `secondary` are both CharcoalNoir (CloudVeil in
+  the dark). Each palette carries `--mono` / `--on-mono`, and a rule placed **after** the `[data-accent=…]` rules
+  points `--accent` / `--on-accent` at them, so chips, buttons, headings and rings go black or white. `accentColor()`
+  does the same for the canvas-side fuse colour. The five Fuse accents still apply to the Fuse palette, and
+  Settings hides or shows a note saying so as the palette changes. The fuse still burns accent → amber → red.
+- **The hairline**: `--ring` (`none` by default, `0 0 0 1px var(--hairline)` under a palette) on `#list li`, the
+  quiet cards and `.h-row`. A `box-shadow`, not a border, because `#list li`'s left border is the priority stripe.
+  Radii needed nothing: the web app was already on Emberr's 12 px.
+- **Type**: Poppins, Emberr's default, self-hosted from `src/fonts` (two weights: 400, and 700 for the CSS's
+  `font-weight: 600`; no CDN, and Vite hashes them into `assets/` where the worker caches them offline). `--font`
+  carries it; the Fuse palette keeps `system-ui`. See `NOTICE`. Body stays 16 px (Emberr's 15 sp is its own scale).
+- Built and unit-tested only (154 tests); **not opened in a browser**, and not deployed — `npm run deploy` is the
+  user's call.
+
+## 0.4.1: the done group folds (the user's request, 2026-11-17)
+
+"defaullt folded for completed oncs in web version is missing." The Android app has a done row
+(`MainActivity`'s `DONE_ROW` sentinel, `KEY_SHOW_DONE`) and this one never got it: finished tasks simply sat on
+at the bottom of the list. Now `render()` splits the two groups it already had — `sorted()` puts done after open,
+which `order.ts` relies on — and puts `doneRow(n)` between them: an `<li class="done-row">` holding a button that
+reads "3 done ▸" / "3 done ▾", with `aria-expanded`. The done cards are only built when it is open.
+
+- `Settings.showDone`, **false by default**: they start folded, which is what the user asked for. **Note the Android
+  app defaults to shown** (`KEY_SHOW_DONE` is `true`); the two differ on purpose until the user says otherwise.
+- The row carries **no `data-id`**, so `order.ts` skips it: it picks rows with `li[data-id]` and groups them by the
+  `done` class, so neither a drag nor Alt+Arrow can see it, and a folded done group simply has nothing to drag.
+- `#list li.done-row` opts out of the card look the way `li.empty` does (no background, border, ring or padding).
+- 154 tests pass; the defaults test in `test/store.test.ts` asserts the whole settings shape, so it names the new
+  field. Built and tested only, then deployed: not opened in a browser.
+
+## 0.4.2: Glass (the user's request, 2026-11-17)
+
+"glass like theme and blurr effect is missing in fuse." Right — Emberr does have a glass system and the
+palette port had left it out. Ported from its
+`shared/.../presentation/shared/components/EmberrBlur.kt`, which has two styles and gives both exact numbers:
+
+- **Regular**, "chrome floating over content — icon buttons, pills, top bars": the background colour at
+  **alpha 0.45**, **blur radius 32 dp**, `noiseFactor` 0. Here: `#undo` (fixed, over the list) and `#quick`.
+- **Thick**, "heavier separation — sheets, dialogs, anything that must hold long-form text": the surface
+  colour at **alpha 0.82**, **blur radius 40 dp**. Here: `dialog.sheet`.
+
+Settings, Look, **Glass** (`Settings.glass`, **true** by default), applied by `applyLook` as `data-glass` on
+`<html>`, the same switch the Android app's 0.41.0 has.
+
+- The web gets the real thing for free: `backdrop-filter: blur(32px | 40px)` with a `color-mix` tint, which the
+  Android app cannot do inside its own window (see `fuse/CLAUDE.md` 0.41.0).
+- `dialog.sheet::backdrop` drops from a 0.45 scrim to **0.18** under glass: the dialog's `backdrop-filter`
+  samples whatever is painted behind it, and the old scrim was nearly all it could see, so the blur was invisible.
+- Everything sits inside `@supports` for backdrop-filter **and** `color-mix`. Both are needed: a browser with the
+  filter but not the function would have kept the opaque background and blurred nothing visible. Without either,
+  the surfaces stay solid, which is Emberr's own `fallbackTint`. `-webkit-backdrop-filter` is paired with each.
+- 154 tests pass (the defaults test names the new field). Built, tested and deployed; not opened in a browser.
+
+## 0.4.3: Emberr's smaller type (the user's request, 2026-11-17)
+
+The same change as the Android app's 0.42.0. Emberr's `MobileFontSizesDefault` is bodyLarge **15 sp** over
+labelSmall **13 sp**; the web ran 16 px over 14 px.
+
+- **Every** `font-size` in the CSS (23 of them, across four files) is now `calc(<px> * var(--type-scale))`,
+  including the `clamp()` one, and `body`'s `font:` shorthand was split so its size could take a calc.
+  `--type-scale` is `calc(var(--type-base) * var(--type-step))`: the palette's own scale times the picked step.
+- `--type-base` is **0.9** under the Emberr and Soft palettes (16 x 0.9 = 14.4, 14 x 0.9 = 12.6), 1 under Fuse.
+- `--type-step` comes from `data-text` on `<html>`: Emberr's five `FontSizePreference` steps as factors of its
+  Default (0.8667, 0.9333, 1, 1.0667, 1.1333). `Settings.textSize` is a key ('xs'…'xl'), guarded by `textKey()`,
+  shown as Settings, Look, **Text size**.
+- Line height stays 1.4; Emberr's body is 1.5 and its titles 1.25, but changing it app-wide moves every layout,
+  so it was left alone deliberately.
+- 154 tests pass. **Trap met twice now:** writing an apostrophe into a TS or XML string through a Python
+  heredoc collapses the escape and breaks the file — word around it instead.
+
 ## The plan, phase by phase (one at a time; each its own release)
 
 2. **Installable (PWA)** (done, 0.2.0): manifest, icons, service worker for offline, system notifications from the worker,

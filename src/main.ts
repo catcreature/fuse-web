@@ -100,6 +100,23 @@ function refresh() {
   if (changed) commit();
 }
 
+/** "3 done ▸" / "3 done ▾": tapping folds or unfolds the done group, and the choice is remembered. */
+function doneRow(n: number): HTMLLIElement {
+  const li = el('li', 'done-row');
+  const open = store.settings.showDone;
+  const b = el('button', '', `${n} done ${open ? '▾' : '▸'}`);
+  b.type = 'button';
+  b.setAttribute('aria-expanded', String(open));
+  b.setAttribute('aria-label', open ? `${n} done. Fold them away.` : `${n} done, folded. Show them.`);
+  b.onclick = () => {
+    store.settings.showDone = !store.settings.showDone;
+    store.saveSettings();
+    render();
+  };
+  li.append(b);
+  return li;
+}
+
 function card(t: Task, now: number): HTMLLIElement {
   const li = el('li', [isDone(t) ? 'done' : '', t.priority === HIGH ? 'high' : ''].join(' ').trim());
   li.dataset.id = String(t.id);
@@ -207,8 +224,16 @@ function render() {
   renderBurned($('burned'), now, { store, zone, commit, undo });
   renderHistory();
   const list = $('list');
+  // sorted() already puts the done group after the open one (order.ts counts on it).
   const shown = sorted(store.tasks, sort);
-  list.replaceChildren(...shown.map((t) => card(t, now)));
+  const doneShown = shown.filter(isDone);
+  const rows = shown.filter((t) => !isDone(t)).map((t) => card(t, now));
+  // 0.4.1: finished tasks fold away behind a row that counts them, as the Android app's done row does.
+  if (doneShown.length > 0) {
+    rows.push(doneRow(doneShown.length));
+    if (store.settings.showDone) rows.push(...doneShown.map((t) => card(t, now)));
+  }
+  list.replaceChildren(...rows);
   if (shown.length === 0) list.append(el('li', 'empty', 'Nothing burning. Add a task to light its fuse.'));
   const open = store.tasks.filter((t) => !isDone(t));
   $('list-bar').hidden = shown.length === 0;

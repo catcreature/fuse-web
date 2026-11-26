@@ -16,8 +16,8 @@
   border-radius: 12px;
   padding: 10px 14px;
 }
-.h-summary { color: var(--dim); font-size: 14px; margin: 4px 0 0; }
-.h-day { font-size: 14px; font-weight: 600; color: var(--dim); margin: 20px 0 4px; }
+.h-summary { color: var(--dim); font-size: calc(14px * var(--type-scale)); margin: 4px 0 0; }
+.h-day { font-size: calc(14px * var(--type-scale)); font-weight: 600; color: var(--dim); margin: 20px 0 4px; }
 .h-list ul, #burned ul { list-style: none; margin: 0; padding: 0; }
 .h-row {
   display: grid;
@@ -28,6 +28,7 @@
   border-radius: 12px;
   padding: 12px 8px 12px 14px;
   margin: 8px 0;
+  box-shadow: var(--ring);
 }
 /* Narrow windows: the actions wrap below the text. */
 @media (max-width: 419.98px) {
@@ -35,13 +36,13 @@
   .h-actions { justify-content: flex-start; }
 }
 .h-text { min-width: 0; }
-.h-status { display: flex; align-items: center; gap: 6px; color: var(--dim); font-size: 14px; margin-top: 2px; }
+.h-status { display: flex; align-items: center; gap: 6px; color: var(--dim); font-size: calc(14px * var(--type-scale)); margin-top: 2px; }
 .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; }
 .dot.done { background: var(--done, #2F6FDB); }
 .dot.missed { background: var(--missed, #C2410C); }
 .h-notes {
   color: var(--dim);
-  font-size: 14px;
+  font-size: calc(14px * var(--type-scale));
   margin-top: 2px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -54,7 +55,7 @@
   border: 0;
   border-radius: 999px;
   padding: 0 14px;
-  font-size: 14px;
+  font-size: calc(14px * var(--type-scale));
 }
 .h-clear {
   display: block;
@@ -70,7 +71,7 @@
 /* Burned out recently. */
 /* The card itself is style.css's quiet card; this is its 3 px edge. */
 #burned { border-left: 3px solid var(--missed, #C2410C); }
-#burned h2 { margin: 0 0 4px; font-size: 16px; }
+#burned h2 { margin: 0 0 4px; font-size: calc(16px * var(--type-scale)); }
 /* The title and its two buttons share a row while they fit (also in the 300 px rail), else the buttons wrap. */
 #burned li {
   display: flex;

@@ -35,7 +35,7 @@ test('settings saved before Settings existed load with the new defaults', () => 
   const old = { warn: 30, keep: 90, doneGone: 2, seenNotes: '0.1.0', welcomed: true };
   const s = new Store(box({ 'fuse.settings': JSON.stringify(old) }));
   expect(s.settings).toEqual({
-    ...old, theme: 'system', accent: 0, quiet: true, quietStart: 1380, quietEnd: 420, strict: false, calm: false,
+    ...old, theme: 'system', accent: 0, palette: 'emberr', quiet: true, quietStart: 1380, quietEnd: 420, strict: false, calm: false, showDone: false, glass: true, textSize: 'm',
   });
 });
 

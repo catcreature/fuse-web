@@ -1,6 +1,6 @@
 // Fuse's service worker: offline copy of the site and system notifications. Hand-written, no Workbox.
 // Bump CACHE every release so old copies are dropped.
-const CACHE = 'fuse-v0.3.1';
+const CACHE = 'fuse-v0.4.3';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
